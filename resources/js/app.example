@@ -1,0 +1,53 @@
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+require('./bootstrap');
+
+window.Vue = require('vue');
+
+import io from "socket.io-client";
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+
+// const files = require.context('./', true, /\.vue$/i)
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
+const socket = io.connect("http://localhost:5000");
+
+/*
+
+Vue.component('exampleComponent', require('./components/ExampleComponent.vue').default);
+const app = new Vue({
+    el: '#app',
+    mounted: function() {
+        socket.emit("register", "emailroy2002");
+        socket.on("registered", function(user) {
+            console.log(user);
+        });
+    }
+});*/
+
+import Child from './components/ExampleComponent.vue'
+
+// define
+var MyComponent = Vue.extend({
+    template: '<div>A custom component!</div>'
+})
+
+// register
+Vue.component('my-component', MyComponent)
+Vue.component('exampleComponent', require('./components/ExampleComponent.vue').default);
+
+// create a root instance
+new Vue({
+    el: '#example',
+    components: { Child }
+})
